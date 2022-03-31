@@ -111,9 +111,6 @@ exports.deleteUser = async (req, res, next) => {
   }
 };
 
-
-
-
 exports.getOrdersUser = async (req, res, next) => {
   try {
     const { username, email, password } = req.body;
