@@ -12,7 +12,7 @@ datasource db {
 
 model Users {
   id Int @id @default(autoincrement())
-  
+
   createdAt DateTime @default(now())
 
   updatedAt DateTime @updatedAt
@@ -28,6 +28,8 @@ model Users {
   Products Products[]
 
   Orders Orders[]
+
+  Carts Carts[]
 }
 
 model Products {
@@ -41,16 +43,57 @@ model Products {
 
   description String
 
-  quantoty Int
+  quantity Int
 
   price Int
 
   status String @default("active")
 
-  userId Int
+  UserId Int
 
-  Users Users @relation(fields: [userId], references: [id])
-  
+  Users Users @relation(fields: [UserId], references: [id])
+
+  ProductsInCart ProductsInCart[]
+}
+
+model ProductsInCart {
+
+  CartId Int
+
+  PorductId Int
+
+  quantity Int
+
+  status String @default("active")
+
+  Products Products @relation(fields: [PorductId], references: [id])
+
+  Carts Carts @relation(fields: [CartId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  updateAt DateTime @updatedAt
+
+  @@id([PorductId, CartId])
+}
+
+model Carts {
+  id Int @id @default(autoincrement())
+
+  UserId Int
+
+  status String @default("active")
+
+  Users Users @relation(fields: [UserId], references: [id])
+
+  ProductsInCart ProductsInCart[]
+
+  Orders Orders[]
+
+  createdAt DateTime @default(now())
+
+  updateAt DateTime @updatedAt
+
 }
 
 model Orders {
@@ -63,12 +106,14 @@ model Orders {
   userId Int
 
   cartid Int
-  
+
   issuedAt Int
 
   totalPrice Int
 
   Users Users @relation(fields: [userId], references: [id])
+
+  Carts Carts @relation(fields: [cartid], references: [id])
 
   status String @default("active")
 
