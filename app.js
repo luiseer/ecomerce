@@ -1,5 +1,5 @@
 const express = require('express');
-const rateLimit = require("rate-limit");
+// const rateLimit = require("rate-limit");
 const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan')
@@ -29,6 +29,7 @@ app.use(helmet());
 
 //compresion
 app.use(compression());
+
 
 app.use(morgan('dev'))
 

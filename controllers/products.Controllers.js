@@ -4,7 +4,9 @@ const prisma = new PrismaClient();
 
 exports.getAllProducts = async (req, res, next) => {
   try {
-    const allProducts = await prisma.users.findMany();
+    const allProducts = await prisma.users.findMany({
+      where: {status: 'active'}
+    });
     res.status(200).json({
       status: 'success',
       data: { allProducts }
@@ -20,13 +22,13 @@ exports.createProduct = async (req, res, next) => {
   try {
     const { title, description, price, quantity } = req.body;
 
-    const user = await prisma.users.create({
+    const product = await prisma.products.create({
       data: { title, description, price, quantity }
     });
 
     res.status(200).json({
       status: 'success',
-      data: { user }
+      data: { product }
     });
   } catch (error) {
     console.log(error);
@@ -38,10 +40,13 @@ exports.createProduct = async (req, res, next) => {
 exports.getProductById = async (req, res, next) => {
   try {
     const { id } = req.params
+    if (!id) {
+      return res.status(404).json({
+        msg: 'Cant no found product wiht the given ID'
+      })
+    }
     const result = await prisma.products.findUnique({
-      where:{
-        id
-      }
+      where:{ id }
     });
     res.status(200).json({
       status: 'success',
@@ -57,9 +62,17 @@ exports.getProductById = async (req, res, next) => {
 exports.updateProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
+    
+    const {title, description, price, quantity} = req.params
+
     const product = await prisma.products.update({
       where: { id },
-      data: { status: 'delete' }
+      data: { 
+        title,
+        description,
+        price,
+        quantity 
+      }
     });
 
     res.status(200).json({
