@@ -2,6 +2,10 @@ const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
+//util
+const {filterObj} = require('../util/filterObj')
+const {AppError} = require('../util/appError')
+
 exports.getAllProducts = async (req, res, next) => {
   try {
     const allProducts = await prisma.users.findMany({
@@ -19,11 +23,21 @@ exports.getAllProducts = async (req, res, next) => {
 };
 
 exports.createProduct = async (req, res, next) => {
+  
   try {
+
     const { title, description, price, quantity } = req.body;
 
     const product = await prisma.products.create({
-      data: { title, description, price, quantity }
+      data: { title, description, price, quantity },
+      select:{
+        id: true,
+        description: true,
+        price: true,
+        quantity: true,
+        updatedAt: true,
+        createdAt: true
+      }
     });
 
     res.status(200).json({
@@ -61,19 +75,18 @@ exports.getProductById = async (req, res, next) => {
 
 exports.updateProduct = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    
-    const {title, description, price, quantity} = req.params
 
-    const product = await prisma.products.update({
-      where: { id },
-      data: { 
-        title,
-        description,
-        price,
-        quantity 
-      }
+    const data = filterObj(req.body, 'title', 'description', 'price', 'quantity')
+    const { id } = req.params;
+   
+    const product = await prisma.products.updateMany({
+      where: { id: Number(id), status: 'active' },
+      data: {...data}
     });
+
+    if (!product) {
+      return next(new AppError(404, 'Product not found with the given ID'))
+    }
 
     res.status(200).json({
       status: 'success',
@@ -90,9 +103,9 @@ exports.updateProduct = async (req, res, next) => {
 exports.deleteProduct = async (req, res, next) => {
   const { id } = req.params;
   try {
-    const product = await prisma.products.update({
-      where: { id },
-      data: { status: 'delete' }
+    const product = await prisma.products.updateMany({
+      where: { id: Number(id), status: 'active' },
+      data: { status: 'deleted' }
     });
     res.status(200).json({
       status: 'success',
