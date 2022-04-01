@@ -107,7 +107,7 @@ model Orders {
 
   cartid Int
 
-  issuedAt Int
+  issuedAt  DateTime @default(now())
 
   totalPrice Int
 

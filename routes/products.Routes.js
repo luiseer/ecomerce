@@ -2,6 +2,8 @@ const express = require('express')
 
 const router = express.Router()
 
+const { createProductValidations } = require('../middlewares/validator.middleware')
+const { validateSession, protectAccountOwner } = require('../middlewares/auth.middleware')
 const {
     getAllProducts,
     createProduct,
@@ -10,15 +12,17 @@ const {
     deleteProduct
 } = require('../controllers/products.Controllers')
 
+router.use(validateSession)
+
 router
     .route('/')
-    .post(createProduct)
+    .post(createProductValidations, createProduct)
     .get(getAllProducts)
 
 router
     .route('/:id')
     .get(getProductById)
-    .patch(updateProduct)
-    .delete(deleteProduct)
+    .patch(protectAccountOwner, updateProduct)
+    .delete(protectAccountOwner, deleteProduct)
 
 module.exports = { productsRouter: router }

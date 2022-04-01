@@ -4,57 +4,47 @@ const prisma = new PrismaClient();
 
 // Utils
 const { catchAsync } = require('../util/catchAsync');
+const { filterObj } = require('../util/filterObj');
 
-exports.addProduct = async (req, res, next) => {
+exports.addProductToCart = async (req, res, next)=>{
   try {
-    const allUsers = await prisma.users.findMany();
-
-    res.status(200).json({
-      status: 'success',
-      data: { allUsers }
-    });
+   
+  } catch (error) {
+    console.log(error);
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+exports.getUserCar = async (req, res, next) => {
+  try {
+   
   } catch (error) {
     console.log(error);
   } finally {
     await prisma.$disconnect();
   }
 };
-exports.updateCart = async (req, res, next) => {
+exports.updateCartProduc = async (req, res, next) => {
   try {
-    const allUsers = await prisma.users.findMany();
-
-    res.status(200).json({
-      status: 'success',
-      data: { allUsers }
-    });
+   
   } catch (error) {
     console.log(error);
   } finally {
     await prisma.$disconnect();
   }
 };
-exports.deleteProduct = async (req, res, next) => {
+exports.removeProductFromCar = async (req, res, next) => {
   try {
-    const allUsers = await prisma.users.findMany();
-
-    res.status(200).json({
-      status: 'success',
-      data: { allUsers }
-    });
+   
   } catch (error) {
     console.log(error);
   } finally {
     await prisma.$disconnect();
   }
 };
-exports.purchase = async (req, res, next) => {
+exports.purchaseCar = async (req, res, next) => {
   try {
-    const allUsers = await prisma.users.findMany();
-
-    res.status(200).json({
-      status: 'success',
-      data: { allUsers }
-    });
+   
   } catch (error) {
     console.log(error);
   } finally {
