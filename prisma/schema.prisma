@@ -37,7 +37,7 @@ model Products {
 
   createdAt DateTime @default(now())
 
-  updateAt DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 
   title String
 
@@ -72,7 +72,7 @@ model ProductsInCart {
 
   createdAt DateTime @default(now())
 
-  updateAt DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 
   @@id([PorductId, CartId])
 }
@@ -101,7 +101,7 @@ model Orders {
 
   createdAt DateTime @default(now())
 
-  updateAt DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 
   userId Int
 

@@ -23,7 +23,7 @@ const {
   getProducts,
   getOrders,
   getOrderByID
-} = require('../controllers/users.Controllers')
+} = require('../controllers/users.controller')
 
 router.post('/login', loginUserValidations, validateResult, loginUser)
 

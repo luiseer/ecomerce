@@ -1,12 +1,15 @@
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
 
 // Utils
 const { AppError } = require('../util/appError');
 const { filterObj } = require('../util/filterObj');
 
 const prisma = new PrismaClient();
+
+// ===================================================================================
 
 exports.getAllUsers = async (req, res, next) => {
   try {
@@ -33,6 +36,8 @@ exports.getAllUsers = async (req, res, next) => {
     await prisma.$disconnect();
   }
 };
+
+// ===================================================================================
 
 exports.createNewUser = async (req, res, next) => {
   try {
@@ -69,42 +74,7 @@ exports.createNewUser = async (req, res, next) => {
   }
 };
 
-exports.loginUser = async (req, res, next) => {
-  try {
-    const { username, email, password } = req.body;
-
-    const user = await prisma.users.create({
-      data: { username, email, password }
-    });
-
-    res.status(200).json({
-      status: 'success',
-      data: { user }
-    });
-  } catch (error) {
-    console.log(error);
-  } finally {
-    await prisma.$disconnect();
-  }
-};
-exports.userProducts = async (req, res, next) => {
-  try {
-    const { username, email, password } = req.body;
-
-    const user = await prisma.users.create({
-      data: { username, email, password }
-    });
-
-    res.status(200).json({
-      status: 'success',
-      data: { user }
-    });
-  } catch (error) {
-    console.log(error);
-  } finally {
-    await prisma.$disconnect();
-  }
-};
+// ===================================================================================
 
 exports.updateUser = async (req, res, next) => {
   try {
@@ -137,6 +107,8 @@ exports.updateUser = async (req, res, next) => {
   }
 };
 
+// ===================================================================================
+
 exports.deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -161,6 +133,8 @@ exports.deleteUser = async (req, res, next) => {
   }
 };
 
+// ===================================================================================
+
 exports.getProducts = async (req, res, next) => {
   try {
     const { id } = req.currentUser;
@@ -179,6 +153,8 @@ exports.getProducts = async (req, res, next) => {
     await prisma.$disconnect();
   }
 };
+
+// ===================================================================================
 
 exports.getOrders = async (req, res, next) => {
   try {

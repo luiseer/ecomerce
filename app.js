@@ -2,14 +2,14 @@ const express = require('express');
 // const rateLimit = require("rate-limit");
 const helmet = require('helmet');
 const compression = require('compression');
-const morgan = require('morgan')
+const morgan = require('morgan');
 // Controllers
 const { globalErrorHandler } = require('./controllers/error.controller');
 
 // Routers
-const { usersRouter } = require('./routes/users.Routes');
-const { productsRouter } = require('./routes/products.Routes');
-const { cartRouter } = require('./routes/carts.Routes');
+const { usersRouter } = require('./routes/users.route');
+const { productsRouter } = require('./routes/products.route');
+const { cartRouter } = require('./routes/cart.routes');
 
 const app = express();
 
@@ -31,12 +31,12 @@ app.use(helmet());
 //compresion
 app.use(compression());
 
-app.use(morgan('dev'))
+app.use(morgan('dev'));
 
 // Endpoints
 app.use('/api/v1/users', usersRouter);
 app.use('/api/v1/products', productsRouter);
-app.use('/api/v1/products', cartRouter);
+app.use('/api/v1/cart', cartRouter);
 
 app.use(globalErrorHandler);
 
