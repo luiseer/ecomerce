@@ -7,7 +7,7 @@ const {
   updateCartProduct,
   removeProductFromCart,
   purchaseCart
-} = require('../controllers/carts.controller');
+} = require('../controllers/carts.Controller');
 
 // Middleware
 const { validateSession } = require('../middlewares/auth.middleware');

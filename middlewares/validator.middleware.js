@@ -18,7 +18,7 @@ exports.loginUserValidations = [
   body('password').notEmpty().withMessage('Credentials are not valid')
 ];
 
-exports.createProductValidations = [
+exports.createProductValidation = [
   // Title can't be empty
   body('title').isString().notEmpty().withMessage('Enter a valid name'),
   // Description can't be empty
@@ -38,17 +38,20 @@ exports.createProductValidations = [
     .withMessage('Enter a valid price')
 ];
 
+
+
+
 exports.validateResult = (req, res, next) => {
-  const errors = validationResult(req)
+  const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
     const message = errors
       .array() // [ { msg, ... }, { msg, ... }, { msg, ... } ]
       .map(({ msg }) => msg) // [msg, msg, msg]
-      .join('. ') // 'msg. msg. msg'
+      .join('. '); // 'msg. msg. msg'
 
-    return next(new AppError(message, 400))
+    return next(new AppError(message, 400));
   }
 
-  next()
-}
+  next();
+};

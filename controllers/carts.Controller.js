@@ -6,18 +6,16 @@ const prisma = new PrismaClient();
 const { catchAsync } = require('../util/catchAsync');
 const { filterObj } = require('../util/filterObj');
 
-exports.addProductToCart = async (req, res, next)=>{
+exports.addProductToCart = async (req, res, next) => {
   try {
-   
   } catch (error) {
     console.log(error);
   } finally {
     await prisma.$disconnect();
   }
-}
-exports.getUserCar = async (req, res, next) => {
+};
+exports.getUserCart = async (req, res, next) => {
   try {
-   
   } catch (error) {
     console.log(error);
   } finally {
@@ -26,7 +24,6 @@ exports.getUserCar = async (req, res, next) => {
 };
 exports.updateCartProduc = async (req, res, next) => {
   try {
-   
   } catch (error) {
     console.log(error);
   } finally {
@@ -35,16 +32,15 @@ exports.updateCartProduc = async (req, res, next) => {
 };
 exports.removeProductFromCar = async (req, res, next) => {
   try {
-   
   } catch (error) {
     console.log(error);
   } finally {
     await prisma.$disconnect();
   }
 };
-exports.purchaseCar = async (req, res, next) => {
+
+exports.purchaseCart = async (req, res, next) => {
   try {
-   
   } catch (error) {
     console.log(error);
   } finally {

@@ -2,7 +2,7 @@ const express = require('express')
 
 const router = express.Router()
 
-const { createProductValidations } = require('../middlewares/validator.middleware')
+const { createProductValidation } = require('../middlewares/validator.middleware')
 const { validateSession, protectAccountOwner } = require('../middlewares/auth.middleware')
 const {
     getAllProducts,
@@ -16,7 +16,7 @@ router.use(validateSession)
 
 router
     .route('/')
-    .post(createProductValidations, createProduct)
+    .post(createProductValidation, createProduct)
     .get(getAllProducts)
 
 router
